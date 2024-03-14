@@ -40,3 +40,24 @@ main {
     color: blue;
 }
 
+.image-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.image-container:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+.image-container img {
+    max-width: 200px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.image-container p {
+    margin: 0;
+    max-width: calc(100% - 220px);
+}
+
