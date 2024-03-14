@@ -1,0 +1,42 @@
+.card-image {
+    width: 100%;
+}
+
+.card-image img {
+    max-height: 400px;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.card-thumbnails {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.card-thumbnails img {
+    margin-right: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.card-thumbnails img:hover,
+.card-thumbnails img.active {
+    border-color: blue;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+main {
+    padding: 20px;
+}
+
+.product-details {
+    margin-bottom: 20px;
+}
+.selected {
+    border-color: blue !important;
+    color: blue;
+}
+
