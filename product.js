@@ -42,7 +42,8 @@ colorButtons.forEach(button => {
         this.style.backgroundColor = color;
 
         // Change button text color (assuming contrasting color for visibility)
-        this.style.color = color === 'Yellow' ? 'black' : 'white'; // Example: White text for dark backgrounds
+        this.style.color = color === 'Yellow' ? 'black' : 'white';
+
     });
 });
 
@@ -51,14 +52,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const increaseBtn = document.getElementById('increaseBtn');
     const quantityInput = document.getElementById('quantityInput');
     const totalPriceLabel = document.getElementById('totalPrice');
-    const pricePerItem = 87999; // Price for 1 item
+    const storageButtons = document.querySelectorAll('.storage-btn');
+    let pricePerItem = 87999; // Default price for 128GB
     const maxQuantity = 5; // Maximum quantity allowed
 
+    // Event listeners for storage buttons
+    storageButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const storageType = this.value; // Get the storage value from the button
+            pricePerItem = getPricePerItem(storageType); // Update the price per item based on selected storage
+            updateTotalPrice(pricePerItem); // Update the total price with the new price per item
+        });
+    });
+
     // Function to update total price
-    function updateTotalPrice() {
+    function updateTotalPrice(pricePerItem) {
         const quantity = parseInt(quantityInput.value);
         const totalPrice = quantity * pricePerItem;
         totalPriceLabel.textContent = `₹${totalPrice.toLocaleString()}`;
+    }
+
+    // Function to get price per item based on selected storage
+    function getPricePerItem(storageType) {
+        switch (storageType) {
+            case '128GB':
+                return 87999;
+            case '256GB':
+                return 99999;
+            case '512GB':
+                return 119999;
+            case '1TB':
+                return 149999;
+            default:
+                return 87999; // Default price for 128GB model if storage type is not recognized
+        }
     }
 
     // Event listener for decrease button
@@ -67,22 +94,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (quantity > 1) {
             quantity--;
             quantityInput.value = quantity;
-            updateTotalPrice();
+            updateTotalPrice(pricePerItem);
         }
     });
 
     // Event listener for increase button
     increaseBtn.addEventListener('click', function() {
         let quantity = parseInt(quantityInput.value);
-        if (quantity >= maxQuantity) {
-            quantity= maxQuantity;
+        if (quantity < maxQuantity) {
+            quantity++;
+            quantityInput.value = quantity;
+            updateTotalPrice(pricePerItem);
         }
-        else if (quantity < 1){
-        quantity = 1;}
-        else if (quantity < maxQuantity){
-        quantity++;}
-        quantityInput.value = quantity;
-        updateTotalPrice();
     });
 
     // Event listener for quantity input
@@ -94,11 +117,15 @@ document.addEventListener('DOMContentLoaded', function() {
             quantity = maxQuantity;
         }
         quantityInput.value = quantity;
-        updateTotalPrice();
+        updateTotalPrice(pricePerItem);
     });
-    // Initialize total price
-    updateTotalPrice();
+
+    // Initialize total price with default values
+    updateTotalPrice(pricePerItem);
 });
+
+
+
 $(document).ready(function () {
     $('#ex1 a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
         var target = $(e.target).attr("href");
